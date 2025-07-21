@@ -12,19 +12,24 @@ let rec make_base' = fun paddings => {
     let combo_term = 25 in
     let combo_indices = [
       # alpha
-      [0, 1], # V
+      [0, 1], # B
       [1, 2], # Q
-      [18, 19], # Z
-      [0, 2], # SCH
+      [18, 19], # X
       [9, 25],  # SZ
-      [15, 26], # AE
-      [17, 26], # OE
-      [6, 26],  # UE      
+      [17, 26], # AE
+      [6, 26], # OE
+      [7, 26],  # UE
+      # alpha macros
+      [0, 2], # SCH
+      # [14, 16], # EU
+      # [6, 15] # OA
+      [2, 3], # TZ
+      [18, 20], # TZT
       # sym
       [22, 23], # SLSH
       [21, 22], # MINS
-      [22, 26], # SEMI
-      [23, 26], # COLON
+      [23, 27], # SCLN
+      [22, 27], # COLON
       # parentheticals
       [0, 9],  # {
       [1, 10], # [
@@ -35,6 +40,7 @@ let rec make_base' = fun paddings => {
       [6, 15], # ]
       [7, 16], # }
       # nav
+      [4, 5], # TAB
       [19, 20], # ESC
       [21, 23], # ENT
       [5, 6], # BSPC
@@ -63,6 +69,8 @@ let rec make_base' = fun paddings => {
   sk' = keycode.tap.sticky.mod,
   # layer control
   lt = keycode.hold.reg.layer,
+  lto = keycode.tap.layer.TO,
+  lst = keycode.tap.sticky.layer,
   # boot, reset, etc
   fak = keycode.tap.custom.fak,
   # media and mouse control
@@ -73,6 +81,8 @@ let rec make_base' = fun paddings => {
   tt = keycode.tap.trans,
   hx = keycode.hold.none,
   ht = keycode.hold.trans,
+  ttlx = keycode.tap.tlex,
+  htlx = keycode.hold.tlex,
 
   # key interrupt behaviors
   ki = kilipan.ki,
@@ -95,8 +105,11 @@ let rec make_base' = fun paddings => {
 
   # alpha layout to generate base keymap from
   layouts = {
-    APTMAK = "WFPBJLUYRSTHKXNAIOCGDM,.",
+    # APTMAK = "WFPBJLUYRSTHKXNAIOCGDM,.",
     APTMAK_DE = "WFPBJLUZRSTHKXNAIOCGDM,.",
+    # NAUGHT = "FLKJPGOUNSHTMYCAIEBXDW',",
+    # NAUGHT_DE =    "FLKYPGOUNSHTMZCAIEBJDW',",
+    NAUGHT_TEST_DE = "FLKYPGOUNSHTMZCEIAVJDW.,",
   },
 
   # function to automatically generate hrm keycodes for the appropriate positions
@@ -156,20 +169,6 @@ let rec make_base' = fun paddings => {
         & make_hrm index
       ),
 
-  thumb = fun thumb_idx =>
-    let thumb_behavior = {
-      timeout_ms = 150,
-      timeout_decision = 'hold,
-      key_interrupts = std.array.replicate key_count ki.hr,
-    } in
-    [
-      de.QUOT & lt 1 & keycode.hold.reg.behavior thumb_behavior,
-      kc.SPC  & lt 2 & keycode.hold.reg.behavior thumb_behavior,
-      kc.E    & lt 3 & keycode.hold.reg.behavior thumb_behavior,
-      kc.TAB  & lt 4 & keycode.hold.reg.behavior thumb_behavior,    
-    ]
-    |> std.array.at thumb_idx,
-
   macro = keycode.macro,
   cu = {
     # copy custom stuff from example
@@ -182,34 +181,77 @@ let rec make_base' = fun paddings => {
       macro.tap kc.C,
       macro.tap kc.H,
     ],
+    EU   = macro.make [
+      macro.tap kc.E,
+      macro.release mdh.lsft,
+      macro.tap kc.U,
+    ],
+    TZ   = macro.make [
+      macro.tap kc.T,
+      macro.tap kc.Y,
+    ],
+    TZT  = macro.make [
+      macro.tap kc.T,
+      macro.tap kc.Y,
+      macro.tap kc.T,
+    ],
+    SOSS = macro.make [
+      macro.tap kc.SPC,
+      macro.tap sk'.lsft,
+    ],
   },
 
+  thumb = fun thumb_idx =>
+    let thumb_behavior = {
+      timeout_ms = 150,
+      timeout_decision = 'hold,
+      key_interrupts = std.array.replicate key_count ki.hr,
+    } in
+    [
+      lto 1   & lt 1 & keycode.hold.reg.behavior thumb_behavior,
+      kc.R    & lt 2 & keycode.hold.reg.behavior thumb_behavior,
+      kc.SPC,#  & lt 4 & keycode.hold.reg.behavior thumb_behavior,
+      lst 3   & lt 3 & keycode.hold.reg.behavior thumb_behavior,
+      # additional things for off-base layers
+      htlx thumb_behavior & lto 0,
+    ]
+    |> std.array.at thumb_idx,
+
   combos_base = [
-    kc.V, kc.Q, kc.Y, cu.SCH, de.SZ, de.AE, de.OE, de.UE,
+    kc.B, kc.Q, kc.X,
+    de.SZ, de.AE, de.OE, de.UE,
+    cu.SCH, cu.TZ, cu.TZT,
     de.SLSH, de.MINS, de.SCLN, de.COLN,
-    de.LCBR, de.LBRC, de.LPRN, de.LABK, de.RABK, de.RPRN, de.RBRC, de.RCBR,
-    kc.ESC, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
+    de.LCBR, de.LBRC, de.LPRN, de.LABK,
+    de.RABK, de.RPRN, de.RBRC, de.RCBR,
+    kc.TAB, kc.ESC, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
     fak.CWTG, kc.CAPS_LOCK,
   ],
   combos_trans = [
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht,
   ],
   combos_overlay = [
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht,
     de.SZ,   tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht,
   ],
 
   ### Keymap itself! ###
   keymap = {
     alph = {
-        fingers = let alpha = fun key_idx => (alphas layouts.APTMAK_DE) |> std.array.at key_idx in [
+        fingers = let alpha = fun key_idx => (alphas layouts.NAUGHT_TEST_DE) |> std.array.at key_idx in [
                   alpha 0,  alpha 1,  alpha 2,  alpha 3,  alpha 4,  alpha 5,  alpha 6,  alpha 7,
         alpha 8,  alpha 9,  alpha 10, alpha 11, alpha 12, alpha 13, alpha 14, alpha 15, alpha 16, alpha 17,
                   alpha 18, alpha 19, alpha 20,                     alpha 21, alpha 22, alpha 23,
@@ -219,20 +261,20 @@ let rec make_base' = fun paddings => {
     },
     numb = {
       fingers = [
-                    tx & hx,      tx & hx,      tx & hx,      tx & hx,      tx & hx, kc.N7,   kc.N8,   kc.N9,
-      kc.PPLS & ht, kc.PMNS & ht, kc.PAST & ht, kc.PSLS & ht, tx & ht,      tx & hx, kc.N4,   kc.N5,   kc.N6,   kc.DOT,
-                    kc.N9,        kc.N8,        kc.N7,                               kc.N1,   kc.N2,   kc.N3,
+                kc.N9,   kc.N8,   kc.N7,   de.PLUS,      de.PLUS,  kc.N7,   kc.N8,   kc.N9,
+      kc.DOT,   kc.N6,   kc.N5,   kc.N4,   kc.COMMA,     kc.COMMA, kc.N4,   kc.N5,   kc.N6,   kc.DOT,
+                kc.N3,   kc.N2,   kc.N1,                           kc.N1,   kc.N2,   kc.N3,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                                tt & ht,      tt & ht,      kc.E,    kc.N0,
+      thumbs = [                  kc.N0,   thumb 4,      ttlx,     kc.N0,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
     navi = {
       fingers = [
-                  tx & hx,      tx & hx,      tx & hx,      media.VOLU,   tx & hx,    tx & hx,    tx & hx,    tx & hx,
-      sk.lctl,    sk.lalt,      sk.lgui,      sk.lsft,      media.VOLD,   kc.LEFT,    kc.DOWN,    kc.UP,      kc.RGHT, tx & hx,
-                  cu.COPY,      cu.CUT,       cu.PSTE,                                kc.HOME,    media.MUTE, kc.END,
+                  tx & hx,      tx & hx,      tx & hx,      media.VOLU,   tx & hx,    tx & hx,   tx & hx,    tx & hx,
+      sk.lctl,    sk.lalt,      sk.lgui,      sk.lsft,      media.VOLD,   kc.LEFT,    kc.DOWN,   kc.UP,      kc.RGHT, tx & hx,
+                  cu.COPY,      cu.CUT,       cu.PSTE,                                kc.HOME,   media.MUTE, kc.END,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                              tt & ht,      tt & ht,      kc.PGDN,    kc.PGUP,
+      thumbs = [                              lt 4,         tt & ht,      kc.PGDN,    kc.PGUP,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
     symb = {
@@ -241,13 +283,13 @@ let rec make_base' = fun paddings => {
         ks.EXLM, de.AT,   de.HASH, ks.DLR,  tx & hx, tx & hx, de.AMPR, de.ASTR, ks.PERC, de.CIRC,
                  de.GRV,  de.DQUO, de.UNDS,                   de.BSLS, de.PIPE, de.EQL,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                   de.TILD, tt & ht, tt & ht, tt & ht,
+      thumbs = [                   de.TILD, de.QUOT, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
     func = {
       fingers = [
-                 fak.BOOT, tt & ht, tt & ht, tt & ht, tt & ht, kc.F7,   kc.F8,   kc.F8,
-        tt & ht, kc.F12,   kc.F11,  kc.F10,  tt & ht, tt & ht, kc.F4,   kc.F5,   kc.F6,   tt & ht,
+                 fak.BOOT, tt & ht, tt & ht, tt & ht, kc.F11,  kc.F7,   kc.F8,   kc.F8,
+        tt & ht, kc.F12,   kc.F11,  kc.F10,  tt & ht, kc.F10,  kc.F4,   kc.F5,   kc.F6,   kc.F12,
                  kc.F9,    kc.F8,   kc.F7,                     kc.F1,   kc.F2,   kc.F3,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
       thumbs = [                    tt & ht, tt & ht, tt & ht, tt & ht,
@@ -257,7 +299,7 @@ let rec make_base' = fun paddings => {
       fingers = [
                  tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
         tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
-                 tt & ht, tt & ht, tt & ht,                   tt & ht, tt & ht, tt & ht,
+                 tt & ht, tt & ht, tt & ht,                   tt & ht, de.DQUO, tt & ht,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
       thumbs = [                   tt & ht, tt & ht, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),

@@ -186,11 +186,11 @@ let thumb = fun thumb_idx =>
 in
 
 let combos_num = [
-  kc.W, kc.M, kc.B, kc.N8, kc.COMMA, kc.DOT,
-        kc.F, kc.P, kc.N7, kc.N9,
-  cu.SCH, kc.Q, kc.K, kc.J, cu.SZ, cu.AE, cu.OE, cu.UE,
+  tt & ht, kc.N0, kc.N8, kc.N8, kc.N0, tt & ht,
+           kc.N9, kc.N7, kc.N7, kc.N9,
+  cu.SCH, kc.Q, kc.PPLS, kc.PPLS, cu.SZ, cu.AE, cu.OE, cu.UE,
   de.MINS, de.SLSH, de.SCLN, de.COLN,
-  de.LCBR, de.LBRC, de.LPRN, de.LABK, de.RABK, de.RPRN, de.RBRC, de.RCBR,
+  de.LCBR, de.LBRC, kc.N0, de.LABK, de.RABK, de.RPRN, de.RBRC, de.RCBR,
   kc.ESC, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
   fak.CWTG, kc.CAPS_LOCK,
 ] in
@@ -208,14 +208,14 @@ let combos_num = [
     ] @ combos_base,
     # NUM
     [
-      kc.PPLS & ht, kc.PMNS & ht, kc.PAST & ht, kc.PSLS & ht, kc.N4,   kc.N5,   kc.N6,   kc.DOT,
-                    kc.N9,        kc.N8,        kc.N7,        kc.N1,   kc.N2,   kc.N3,
+      kc.DOT,       kc.N6,        kc.N5,        kc.N4,        kc.N4,   kc.N5,   kc.N6,   kc.DOT,
+                    kc.N3,        kc.N2,        kc.N1,        kc.N1,   kc.N2,   kc.N3,
                                   tt & ht,      tt & ht,      kc.E,    kc.N0,
     ] @ combos_num,
     # NAV
     [
       sk.lctl & ht, sk.lalt & ht, sk.lgui & ht, sk.lsft & ht, kc.LEFT,    kc.DOWN,    kc.UP,  kc.RGHT,
-                    cu.COPY,      kc.CUT,       cu.PSTE,      kc.HOME,    media.MUTE, kc.END,
+                    cu.COPY,      cu.CUT,       cu.PSTE,      kc.HOME,    media.MUTE, kc.END,
                                   tt & ht,      tt & ht,      media.VOLD, media.VOLU,
     ] @ combos_base,
     # SYM
