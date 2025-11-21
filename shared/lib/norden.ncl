@@ -47,6 +47,13 @@ let rec make_base' = fun paddings => {
       [14, 16], # right oss
       [11, 14], # caps word
       [0, 7], # caps lock
+      # other osm
+      [9, 18], # left os-alt
+      [10, 19], # left os-gui
+      [11, 20], # left os-ctl
+      [14, 23], # right os-ctl
+      [15, 24], # right os-gui
+      [16, 25], # right os-alt
     ] in
     kilipan.make_virtual_keys paddings combo_term combo_indices,
 
@@ -155,15 +162,17 @@ let rec make_base' = fun paddings => {
     |> fak_util.array.enumerate
     |> std.array.map (
         fun { index, value } => kc."%{value}"
+        # (un)comment for home-row mods
         & make_hrm index
       ),
 
   macro = keycode.macro,
   cu = {
-    # copy custom stuff from example
     COPY = md.lctl & kc.C,
     PSTE = md.lctl & kc.V,
     CUT  = md.lctl & kc.X,
+    PRNT = md.lctl & kc.P,
+    SAVE = md.lctl & kc.S,
     SCH  = macro.make [
       macro.tap kc.S,
       macro.release mdh.rsft,
@@ -188,12 +197,12 @@ let rec make_base' = fun paddings => {
       key_interrupts = std.array.replicate key_count ki.hr,
     } in
     [
-      lto 1   & lt 1 & keycode.hold.reg.behavior thumb_behavior,
+      kc.TAB  & lt 1 & keycode.hold.reg.behavior thumb_behavior,
       kc.S    & lt 2 & keycode.hold.reg.behavior thumb_behavior,
-      kc.SPC,#  & lt 4 & keycode.hold.reg.behavior thumb_behavior,
-      lst 3   & lt 3 & keycode.hold.reg.behavior thumb_behavior,
+      kc.SPC  & lt 3 & keycode.hold.reg.behavior thumb_behavior,
+      de.QUOT & lt 4 & keycode.hold.reg.behavior thumb_behavior,
       # additional things for off-base layers
-      htlx thumb_behavior & lto 0,
+      # htlx thumb_behavior & lto 0,
     ]
     |> std.array.at thumb_idx,
 
@@ -205,7 +214,8 @@ let rec make_base' = fun paddings => {
     de.LCBR, de.LBRC, de.LPRN, de.LABK,
     de.RABK, de.RPRN, de.RBRC, de.RCBR,
     kc.TAB, kc.ESC, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
-    sk'.lsft & lst 5, sk'.rsft & lst 5, fak.CWTG, kc.CAPS_LOCK,
+    sk.lsft & lst 5, sk.rsft & lst 5, fak.CWTG, kc.CAPS_LOCK,
+    sk.lalt, sk.lgui, sk.lctl, sk.rctl, sk.rgui, sk.lalt,
   ],
   combos_trans = [
     tt & ht, tt & ht, tt & ht,
@@ -216,16 +226,18 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
   combos_numb = [
-    tt & ht, kc.BSPC, tt & ht,
+    tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
-    md.lctl & kc.BSPC,
+    tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
-    ttlx, ttlx, ttlx, tt & ht, ttlx, ttlx,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
   combos_overlay = [
     tt & ht, tt & ht, tt & ht,
@@ -236,6 +248,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
 
   # alpha layout to generate base keymap from
@@ -265,16 +278,16 @@ let rec make_base' = fun paddings => {
     },
     numb = {
       fingers = [
-                kc.N6,   kc.N5,   kc.N4,   de.PLUS,      de.PLUS,  kc.N4,   kc.N5,   kc.N6,
-      kc.DOT,   kc.N3,   kc.N2,   kc.N1,   kc.COMMA,     kc.COMMA, kc.N1,   kc.N2,   kc.N3,   kc.DOT,
-                kc.N9,   kc.N8,   kc.N7,                           kc.N7,   kc.N8,   kc.N9,
+                kc.N9,   kc.N8,   kc.N7,    de.PLUS,     de.PLUS,  kc.N4,   kc.N5,   kc.N6,
+      kc.DOT,   kc.N6,   kc.N5,   kc.N4,    kc.N0,       de.MINS,  kc.N1,   kc.N2,   kc.N3,   kc.DOT,
+                kc.N3,   kc.N2,   kc.N1,                           kc.N7,   kc.N8,   kc.N9,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                  kc.N0,   thumb 4,      ttlx,     kc.N0,
+      thumbs = [                  tt & ht, tt & ht,      tt & ht,  kc.N0,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
     navi = {
       fingers = [
-                  tx & hx,      tx & hx,      tx & hx,      media.VOLU,   tx & hx,    kc.PGDN,   kc.PGUP,    tx & hx,
+                  tx & hx,      cu.SAVE,      cu.PRNT,      media.VOLU,   tx & hx,    kc.PGDN,   kc.PGUP,    tx & hx,
       sk.lctl,    sk.lalt,      sk.lgui,      sk.lsft,      media.VOLD,   kc.LEFT,    kc.DOWN,   kc.UP,      kc.RGHT, tx & hx,
                   cu.COPY,      cu.CUT,       cu.PSTE,                                kc.HOME,   media.MUTE, kc.END,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
@@ -283,9 +296,9 @@ let rec make_base' = fun paddings => {
     },
     symb = {
       fingers = [
-                 tx & hx, tx & hx, tx & hx, tx & hx, tx & hx, de.QUOT, tx & hx, tx & hx,
+                 de.LCBR, de.LBRC, de.LPRN, de.LABK, de.RABK, de.RPRN, de.RBRC, de.RCBR,
         ks.EXLM, de.AT,   de.HASH, ks.DLR,  tx & hx, tx & hx, de.AMPR, de.ASTR, ks.PERC, de.CIRC,
-                 de.GRV,  de.DQUO, de.UNDS,                   de.BSLS, de.PIPE, de.EQL,
+                 de.GRV,  de.DQUO, de.ACUT,                   de.BSLS, de.PIPE, de.EQL,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
       thumbs = [                   de.TILD, tt & ht, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
@@ -293,8 +306,8 @@ let rec make_base' = fun paddings => {
     func = {
       fingers = [
                  fak.BOOT, tt & ht, tt & ht, tt & ht, kc.F11,  kc.F7,   kc.F8,   kc.F8,
-        tt & ht, kc.F12,   kc.F11,  kc.F10,  tt & ht, kc.F10,  kc.F4,   kc.F5,   kc.F6,   kc.F12,
-                 kc.F9,    kc.F8,   kc.F7,                     kc.F1,   kc.F2,   kc.F3,
+        tt & ht, tt & ht,  tt & ht, tt & ht, tt & ht, kc.F10,  kc.F4,   kc.F5,   kc.F6,   kc.F12,
+                 tt & ht,  tt & ht, tt & ht,                   kc.F1,   kc.F2,   kc.F3,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
       thumbs = [                    tt & ht, tt & ht, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
@@ -305,7 +318,7 @@ let rec make_base' = fun paddings => {
         tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
                  tt & ht, tt & ht, tt & ht,                   tt & ht, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                   tt & ht, tt & ht, tt & ht, kc.TAB,
+      thumbs = [                   tt & ht, tt & ht, tt & ht, de.DQUO,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
   }

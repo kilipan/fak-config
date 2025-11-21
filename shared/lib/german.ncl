@@ -17,6 +17,7 @@ let { tap, ..} = import "fak/keycode.ncl" in
   OE   = tap.reg.kc.SCLN,
   UE   = tap.reg.kc.LBRC,
   AT   = tap.reg.mod.ralt & tap.reg.kc.Q,
+  EUR  = tap.reg.mod.ralt & tap.reg.kc.E,
   HASH = tap.reg.kc.NUHS,
   AMPR = tap.reg.ks.CIRC,
   ASTR = tap.reg.ks.RCBR,
