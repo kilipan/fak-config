@@ -12,20 +12,20 @@ let rec make_base' = fun paddings => {
     let combo_term = 25 in
     let combo_indices = [
       # alpha
-      [0, 1], # Q
-      [1, 2], # V
-      [18, 19], # X
-      [9, 25],  # SZ
-      [17, 26], # AE
-      [6, 26], # OE
-      [7, 26],  # UE
+      [6, 7], # Q
+      [5, 6], # V
+      [22, 23], # X
+      [16, 26],  # SZ
+      [10, 25], # AE
+      [0, 25], # OE
+      [1, 25],  # UE
       # alpha macros
-      [0, 2], # SCH
+      [5, 7], # SCH
       # sym
-      [22, 23], # SLSH
+      [18, 19], # SLSH
       [21, 22], # MINS
-      [22, 27], # SCLN
-      [23, 27], # COLON
+      [19, 24], # SCLN
+      [18, 24], # COLON
       # parentheticals
       [0, 9],  # {
       [1, 10], # [
@@ -36,12 +36,12 @@ let rec make_base' = fun paddings => {
       [6, 15], # ]
       [7, 16], # }
       # nav
-      [4, 5], # TAB
+      [2, 3], # TAB
       [19, 20], # ESC
       [21, 23], # ENT
-      [5, 6], # BSPC
-      [6, 7], # DEL
-      [5, 7], # C-BSPC
+      [0, 1], # BSPC
+      [1, 2], # DEL
+      [0, 2], # C-BSPC
       # shifting
       [9, 11], # left oss
       [14, 16], # right oss
@@ -134,8 +134,8 @@ let rec make_base' = fun paddings => {
 
     # list of hrm, lsft activates layer 5 for key overrides
     let hrm_mods = [
-      mdh.lctl, mdh.lalt, mdh.lgui, mdh.lsft & lt 5, mdh.ralt,
-      mdh.ralt, mdh.rsft, mdh.rgui, mdh.lalt, mdh.rctl,
+      mdh.lctl, mdh.lalt, mdh.lgui, mdh.lsft, mdh.ralt,
+      mdh.ralt, mdh.rsft & lt 5, mdh.rgui, mdh.lalt, mdh.rctl,
     ] in
 
     # ignore paddings because this works off the base layout (e.g. layouts.APTMAK)
@@ -197,10 +197,10 @@ let rec make_base' = fun paddings => {
       key_interrupts = std.array.replicate key_count ki.hr,
     } in
     [
-      kc.TAB  & lt 1 & keycode.hold.reg.behavior thumb_behavior,
-      kc.S    & lt 2 & keycode.hold.reg.behavior thumb_behavior,
-      kc.SPC  & lt 3 & keycode.hold.reg.behavior thumb_behavior,
-      de.QUOT & lt 4 & keycode.hold.reg.behavior thumb_behavior,
+      de.QUOT & lt 1 & keycode.hold.reg.behavior thumb_behavior,
+      kc.SPC  & lt 2 & keycode.hold.reg.behavior thumb_behavior,
+      kc.S    & lt 3 & keycode.hold.reg.behavior thumb_behavior,
+      kc.TAB  & lt 4 & keycode.hold.reg.behavior thumb_behavior,
       # additional things for off-base layers
       # htlx thumb_behavior & lto 0,
     ]
@@ -258,6 +258,7 @@ let rec make_base' = fun paddings => {
     # NAUGHT = "FLKJPGOUNSHTMYCAIEBXDW',",
     # NAUGHT_DE =    "FLKYPGOUNSHTMZCAIEBJDW',",
     NORDEN = "LDYKPWOURNTHFZCEIAJMBG,.",
+    SUEDEN = "UOWPKYDLEIACZFHTNR.,GBMJ",
   },
 
   #   l d z k  p w o u
@@ -268,7 +269,7 @@ let rec make_base' = fun paddings => {
   ### Keymap itself! ###
   keymap = {
     alph = {
-        fingers = let alpha = fun key_idx => (alphas layouts.NORDEN) |> std.array.at key_idx in [
+        fingers = let alpha = fun key_idx => (alphas layouts.SUEDEN) |> std.array.at key_idx in [
                   alpha 0,  alpha 1,  alpha 2,  alpha 3,  alpha 4,  alpha 5,  alpha 6,  alpha 7,
         alpha 8,  alpha 9,  alpha 10, alpha 11, alpha 12, alpha 13, alpha 14, alpha 15, alpha 16, alpha 17,
                   alpha 18, alpha 19, alpha 20,                     alpha 21, alpha 22, alpha 23,
@@ -318,7 +319,7 @@ let rec make_base' = fun paddings => {
         tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
                  tt & ht, tt & ht, tt & ht,                   tt & ht, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                   tt & ht, tt & ht, tt & ht, de.DQUO,
+      thumbs = [                   de.DQUO, tt & ht, tt & ht, tt & ht,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
   }
