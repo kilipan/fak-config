@@ -70,21 +70,21 @@ let virtual_keys' = [
   combo.make 25 [5, 6],   # F
   # ---
   combo.make 25 [8, 9],   # X
-  combo.make 25 [8, 10],  # ESC
+  combo.make 25 [8, 10],  # ENTER
   combo.make 25 [9, 10],  # Z
-  combo.make 25 [11, 12], # Y
-  combo.make 25 [11, 13], # ENTER
+  combo.make 25 [11, 12], # W
+  combo.make 25 [11, 13], # ESC
   combo.make 25 [12, 13], # M
   # ---
   combo.make 25 [1, 8],   # DOT
   combo.make 25 [2, 9],   # COMMA
   combo.make 25 [3, 10],  # J
   combo.make 25 [4, 11],  # K
-  combo.make 25 [5, 12],  # W
+  combo.make 25 [5, 12],  # Y
   combo.make 25 [6, 13],  # Q
   # alpha non-adjacent
   combo.make 25 [6, 16],  # ß
-  combo.make 25 [2, 15],  # Ä
+  combo.make 25 [0, 15],  # Ä
   combo.make 25 [9, 15],  # Ö
   combo.make 25 [8, 15],  # Ü
   # sym
@@ -107,8 +107,8 @@ let virtual_keys' = [
 ] in
 let combos_base = [
   kc.BSPC, md.lctl & kc.BSPC, kc.V, kc.P, kc.DEL, kc.F,
-  kc.X, kc.ESC, kc.Y, kc.Z, kc.ENTER, kc.M,
-  kc.DOT, kc.COMMA, kc.J, kc.K, kc.W, kc.Q,
+  kc.X, kc.ENTER, kc.Y, kc.W, kc.ESC, kc.M,
+  kc.DOT, kc.COMMA, kc.J, kc.K, kc.Z, kc.Q,
   cu.SZ, cu.AE, cu.OE, cu.UE,
   de.BSLS, de.SLSH, de.PLUS, de.MINS,
   de.LPRN, de.RPRN, de.LBRC, de.RBRC, de.LCBR, de.RCBR, de.LABK, de.RABK,
@@ -213,8 +213,7 @@ let layouts = {
   APTMIN = "RSTHNAIOCGDLUY",
   APTMIN_DE = "RSTHNAIOCGDLUZ",
   NORDMIN = "RNTHCEIALDBGOU",
-  SUEDMIN = "EIACHTNRUOGBDL",
-} in
+  SUEDMIN = "AIECHTNRUOGBDL", } in
 
 ### Keymap itself! ###
 {

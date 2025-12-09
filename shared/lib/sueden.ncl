@@ -38,6 +38,7 @@ let rec make_base' = fun paddings => {
       # nav
       [2, 3], # TAB
       [19, 20], # ESC
+      [18, 20], # ENT
       [21, 23], # ENT
       [0, 1], # BSPC
       [1, 2], # DEL
@@ -213,7 +214,7 @@ let rec make_base' = fun paddings => {
     de.SLSH, de.MINS, de.SCLN, de.COLN,
     de.LCBR, de.LBRC, de.LPRN, de.LABK,
     de.RABK, de.RPRN, de.RBRC, de.RCBR,
-    kc.TAB, kc.ESC, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
+    kc.TAB, kc.ESC, kc.ENT, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
     sk.lsft & lst 5, sk.rsft & lst 5, fak.CWTG, kc.CAPS_LOCK,
     sk.lalt, sk.lgui, sk.lctl, sk.rctl, sk.rgui, sk.lalt,
   ],
@@ -224,7 +225,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
@@ -235,7 +236,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
@@ -246,7 +247,7 @@ let rec make_base' = fun paddings => {
     de.SZ,   tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
@@ -258,7 +259,7 @@ let rec make_base' = fun paddings => {
     # NAUGHT = "FLKJPGOUNSHTMYCAIEBXDW',",
     # NAUGHT_DE =    "FLKYPGOUNSHTMZCAIEBJDW',",
     NORDEN = "LDYKPWOURNTHFZCEIAJMBG,.",
-    SUEDEN = "UOWPKYDLEIACZFHTNR.,GBMJ",
+    SUEDEN = "UOWPKYDLAIECZFHTNR.,GBMJ",
   },
 
   #   l d z k  p w o u
