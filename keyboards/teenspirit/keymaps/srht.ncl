@@ -57,16 +57,18 @@ let cu = {
     macro.tap de.RCBR,
     macro.tap kc.LEFT,
   ],
+  # cu.RL, cu.HN, cu.KT, cu.CY, cu.EO, cu.UI,
+  # cu.RV, cu.NB, cu.MT, cu.GY, cu.OE, cu.IU,
   RL = macro.make [ macro.tap kc.R, macro.release mdh.rsft, macro.tap kc.L, ],
-  DT = macro.make [ macro.tap kc.D, macro.release mdh.rsft, macro.tap kc.T, ],
-  HM = macro.make [ macro.tap kc.H, macro.release mdh.rsft, macro.tap kc.M, ],
-  SC = macro.make [ macro.tap kc.S, macro.release mdh.lsft, macro.tap kc.C, ],
+  HN = macro.make [ macro.tap kc.H, macro.release mdh.rsft, macro.tap kc.N, ],
+  KT = macro.make [ macro.tap kc.K, macro.release mdh.rsft, macro.tap kc.T, ],
+  CZ = macro.make [ macro.tap kc.C, macro.release mdh.lsft, macro.tap kc.Z, ],
   EO = macro.make [ macro.tap kc.E, macro.release mdh.lsft, macro.tap kc.O, ],
   UI = macro.make [ macro.tap kc.U, macro.release mdh.lsft, macro.tap kc.I, ],
-  WR = macro.make [ macro.tap kc.W, macro.release mdh.rsft, macro.tap kc.R, ],
-  BT = macro.make [ macro.tap kc.B, macro.release mdh.rsft, macro.tap kc.T, ],
-  MF = macro.make [ macro.tap kc.M, macro.release mdh.rsft, macro.tap kc.F, ],
-  GS = macro.make [ macro.tap kc.G, macro.release mdh.lsft, macro.tap kc.S, ],
+  RV = macro.make [ macro.tap kc.R, macro.release mdh.rsft, macro.tap kc.V, ],
+  NB = macro.make [ macro.tap kc.N, macro.release mdh.rsft, macro.tap kc.B, ],
+  MT = macro.make [ macro.tap kc.M, macro.release mdh.rsft, macro.tap kc.T, ],
+  GZ = macro.make [ macro.tap kc.G, macro.release mdh.lsft, macro.tap kc.Z, ],
   OE = macro.make [ macro.tap kc.O, macro.release mdh.lsft, macro.tap kc.E, ],
   IU = macro.make [ macro.tap kc.I, macro.release mdh.lsft, macro.tap kc.U, ],
 } in
@@ -82,7 +84,7 @@ let virtual_keys' = [
   combo.make 25 [11, 12], # MINUS
   combo.make 25 [11, 13], # ENTER
   # alpha non-adjacent
-  combo.make 25 [4, 17],  # ß
+  combo.make 25 [11, 17],  # ß
   combo.make 25 [7, 17],  # Ä
   combo.make 25 [5, 17], # Ö
   combo.make 25 [6, 17], # Ü
@@ -105,7 +107,7 @@ let virtual_keys' = [
   # caps
   combo.make 20 [8, 9], # OSS
   combo.make 20 [12, 13], # OSS
-  combo.make 25 [3, 4], # caps word
+  combo.make 25 [10, 11], # caps word
   combo.make 25 [1, 6], # caps lock
 ] in
 let combos_L1 = [
@@ -113,7 +115,7 @@ let combos_L1 = [
   de.MINS, kc.ENTER,
   cu.de_SZ, cu.de_AE, cu.de_OE, cu.de_UE,
   md.lctl & kc.BSPC, de.BSLS, de.SLSH, de.SCLN, de.COLN,
-  cu.RL, cu.DT, cu.HM, cu.SC, cu.EO, cu.UI,
+  cu.RL, cu.HN, cu.KT, cu.CZ, cu.EO, cu.UI,
   kc.ESC, kc.TAB,
   sk.lsft & sl 5, sk.lsft, fak.CWTG, kc.CAPS_LOCK,
 ] in
@@ -122,7 +124,7 @@ let combos_L2 = [
   tt & ht, tt & ht,
   tt & ht, tt & ht, tt & ht, tt & ht,
   tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
-  cu.WR, cu.BT, cu.MF, cu.GS, cu.OE, cu.IU,
+  cu.RV, cu.NB, cu.MT, cu.GZ, cu.OE, cu.IU,
   tt & ht, tt & ht,
   tt & ht, tt & ht, tt & ht, tt & ht,
 ] in
@@ -265,22 +267,22 @@ let t_L2 = fun thumb_idx =>
 in
 
 let layouts = {
-  BUGGER_L1 = "NLDMCOUARTHSEI",
-  BUGGER_L2 = "PXBKGJ,YWVFZQ.",
+  SRHT_L1 = "SLNDGOUARHTCEI",
+  SRHT_L2 = "FXBMWJ,YVPKZQ.",
 } in
 
 ### Keymap itself! ###
 {
   virtual_keys = virtual_keys',
   layers = [
-    let base = fun key_idx => (alphas layouts.BUGGER_L1) |> std.array.at key_idx in
+    let base = fun key_idx => (alphas layouts.SRHT_L1) |> std.array.at key_idx in
     # ALPHA 1
     [
       base 0,  base 1,  base 2,  base 3,  base 4,  base 5,  base 6,  base 7,
                base 8,  base 9,  base 10, base 11, base 12, base 13,
                         t_L1 0,  t_L1 1,  t_L1 2,  t_L1 3,
     ] @ combos_L1,
-    let base = fun key_idx => (alphas layouts.BUGGER_L2) |> std.array.at key_idx in
+    let base = fun key_idx => (alphas layouts.SRHT_L2) |> std.array.at key_idx in
     # ALPHA 2
     [
       base 0,  base 1,  base 2,  base 3,  base 4,  base 5,  base 6,  base 7,

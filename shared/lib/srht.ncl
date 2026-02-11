@@ -12,13 +12,14 @@ let rec make_base' = fun paddings => {
     let combo_term = 25 in
     let combo_indices = [
       # alpha
-      [0, 1], # Q
-      [1, 2], # V
+      [0, 1],   # Q
+      [1, 2],   # V
       [18, 19], # X
-      [9, 25],  # SZ
-      [17, 26], # AE
-      [6, 26], # OE
-      [7, 26],  # UE
+      [9, 10], # J
+      [14, 27], # SZ
+      [17, 27], # AE
+      [6, 27],  # OE
+      [7, 27],  # UE
       # alpha macros
       [0, 2], # SCH
       # sym
@@ -198,8 +199,8 @@ let rec make_base' = fun paddings => {
       key_interrupts = std.array.replicate key_count ki.hr,
     } in
     [
-      kc.TAB  & lt 1 & keycode.hold.reg.behavior thumb_behavior,
-      kc.S    & lt 2 & keycode.hold.reg.behavior thumb_behavior,
+      fak.REP & lt 1 & keycode.hold.reg.behavior thumb_behavior,
+      kc.SPC  & lt 2 & keycode.hold.reg.behavior thumb_behavior,
       kc.SPC  & lt 3 & keycode.hold.reg.behavior thumb_behavior,
       de.QUOT & lt 4 & keycode.hold.reg.behavior thumb_behavior,
       # additional things for off-base layers
@@ -208,7 +209,7 @@ let rec make_base' = fun paddings => {
     |> std.array.at thumb_idx,
 
   combos_base = [
-    kc.Q, kc.V, kc.X,
+    kc.Q, kc.V, kc.X, kc.J,
     de.SZ, de.AE, de.OE, de.UE,
     cu.SCH,
     de.SLSH, de.MINS, de.SCLN, de.COLN,
@@ -219,7 +220,7 @@ let rec make_base' = fun paddings => {
     sk.lalt, sk.lgui, sk.lctl, sk.rctl, sk.rgui, sk.lalt,
   ],
   combos_trans = [
-    tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
@@ -230,7 +231,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
   combos_numb = [
-    tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
@@ -241,7 +242,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
   ],
   combos_overlay = [
-    tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht,
     de.SZ,   tt & ht, tt & ht, tt & ht,
@@ -258,18 +259,19 @@ let rec make_base' = fun paddings => {
     # APTMAK_DE = "WFPBJLUZRSTHKXNAIOCGDM,.",
     # NAUGHT = "FLKJPGOUNSHTMYCAIEBXDW',",
     # NAUGHT_DE =    "FLKYPGOUNSHTMZCAIEBJDW',",
-    NORDEN = "LDYKPWOUNRTHFZCEIAJMBG,.",
+    # NORDEN = "LDKYPWOUNRTHFZCEIAJMBG,.",
+    SRHT = "LNDKFWOUSRHTBZCEIAYMPG,.",
   },
 
-  #   l d z k  p w o u
-  # n r t h f  y c e i a
-  #   j m b      g , .
-  #       # s  _ !
+  #   l n d k  f w o u
+  # s r h t b  y c e i a
+  #   z m p      g , .
+  #       # *  _ !
 
   ### Keymap itself! ###
   keymap = {
     alph = {
-        fingers = let alpha = fun key_idx => (alphas layouts.NORDEN) |> std.array.at key_idx in [
+        fingers = let alpha = fun key_idx => (alphas layouts.SRHT) |> std.array.at key_idx in [
                   alpha 0,  alpha 1,  alpha 2,  alpha 3,  alpha 4,  alpha 5,  alpha 6,  alpha 7,
         alpha 8,  alpha 9,  alpha 10, alpha 11, alpha 12, alpha 13, alpha 14, alpha 15, alpha 16, alpha 17,
                   alpha 18, alpha 19, alpha 20,                     alpha 21, alpha 22, alpha 23,

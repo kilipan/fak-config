@@ -94,7 +94,7 @@ let virtual_keys' = [
   combo.make 25 [14, 19], # COLON
   # vertical combos
   combo.make 25 [1, 9],  # RL | WR | copy | {
-  combo.make 25 [2, 10],  # DT | BT | cut  | [
+  combo.make 25 [2, 10], # DT | BT | cut  | [
   combo.make 25 [3, 11], # HM | MF | pste | (
   combo.make 25 [4, 12], # SC | GS |    7 | )
   combo.make 25 [5, 13], # EO | OE |    8 | ]
@@ -265,8 +265,8 @@ let t_L2 = fun thumb_idx =>
 in
 
 let layouts = {
-  BUGGER_L1 = "NLDMCOUANRTHSEIA",
-  BUGGER_L2 = "PXBKGJ,YPWVFZQ.Y",
+  BUGGER_L1 = "SLNDZOUASRHTCEIA",
+  BUGGER_L2 = "FXBMWQ,JFVPKGZ.J",
 } in
 
 ### Keymap itself! ###
