@@ -57,17 +57,17 @@ let cu = {
     macro.tap de.RCBR,
     macro.tap kc.LEFT,
   ],
-  # cu.RL, cu.HN, cu.KT, cu.CY, cu.EO, cu.UI,
-  # cu.RV, cu.NB, cu.MT, cu.GY, cu.OE, cu.IU,
+  # cu.RL, cu.HN, cu.KT,   cu.CY, cu.EO, cu.UI,
+  # cu.RM, cu.NB, cu.THE,  cu.GY, cu.OE, cu.IU,
   RL = macro.make [ macro.tap kc.R, macro.release mdh.rsft, macro.tap kc.L, ],
   HN = macro.make [ macro.tap kc.H, macro.release mdh.rsft, macro.tap kc.N, ],
   KT = macro.make [ macro.tap kc.K, macro.release mdh.rsft, macro.tap kc.T, ],
   CZ = macro.make [ macro.tap kc.C, macro.release mdh.lsft, macro.tap kc.Z, ],
   EO = macro.make [ macro.tap kc.E, macro.release mdh.lsft, macro.tap kc.O, ],
   UI = macro.make [ macro.tap kc.U, macro.release mdh.lsft, macro.tap kc.I, ],
-  RV = macro.make [ macro.tap kc.R, macro.release mdh.rsft, macro.tap kc.V, ],
+  RM = macro.make [ macro.tap kc.R, macro.release mdh.rsft, macro.tap kc.M, ],
   NB = macro.make [ macro.tap kc.N, macro.release mdh.rsft, macro.tap kc.B, ],
-  MT = macro.make [ macro.tap kc.M, macro.release mdh.rsft, macro.tap kc.T, ],
+  THE = macro.make [ macro.tap kc.T, macro.release mdh.rsft, macro.tap kc.H, macro.tap kc.E ],
   GZ = macro.make [ macro.tap kc.G, macro.release mdh.lsft, macro.tap kc.Z, ],
   OE = macro.make [ macro.tap kc.O, macro.release mdh.lsft, macro.tap kc.E, ],
   IU = macro.make [ macro.tap kc.I, macro.release mdh.lsft, macro.tap kc.U, ],
@@ -79,36 +79,36 @@ let cu = {
 
 let virtual_keys' = [
   # alpha
-  combo.make 25 [4, 5],   # BSPC
-  combo.make 25 [5, 6],   # DELETE
-  combo.make 25 [11, 12], # MINUS
-  combo.make 25 [11, 13], # ENTER
+  combo.make 15 [4, 5],   # BSPC
+  combo.make 15 [5, 6],   # DELETE
+  combo.make 15 [11, 12], # MINUS
+  combo.make 15 [11, 13], # ENTER
   # alpha non-adjacent
-  combo.make 25 [11, 17],  # ß
-  combo.make 25 [7, 17],  # Ä
-  combo.make 25 [5, 17], # Ö
-  combo.make 25 [6, 17], # Ü
+  combo.make 15 [11, 17],  # ß
+  combo.make 15 [7, 17],  # Ä
+  combo.make 15 [5, 17], # Ö
+  combo.make 15 [6, 17], # Ü
   # sym
-  combo.make 25 [4, 6],   # ctrl-bspc
-  combo.make 25 [1, 9],   # BACKSLSH
-  combo.make 25 [6, 12],  # SLSH
-  combo.make 25 [12, 17], # SEMI
-  combo.make 25 [13, 17], # COLON
+  combo.make 15 [4, 6],   # ctrl-bspc
+  combo.make 15 [1, 9],   # BACKSLSH
+  combo.make 15 [6, 12],  # SLSH
+  combo.make 15 [12, 17], # SEMI
+  combo.make 15 [13, 17], # COLON
   # vertical combos
-  combo.make 25 [1, 8],  # RL | WR | copy | {
-  combo.make 25 [2, 9],  # DT | BT | cut  | [
-  combo.make 25 [3, 10], # HM | MF | pste | (
-  combo.make 25 [4, 11], # SC | GS |    7 | )
-  combo.make 25 [5, 12], # EO | OE |    8 | ]
-  combo.make 25 [6, 13], # UI | IU |    9 | }
+  combo.make 30 [1, 8],  # RL | RM  | copy | {
+  combo.make 30 [2, 9],  # HN | NB  | cut  | [
+  combo.make 30 [3, 10], # KT | THE | pste | (
+  combo.make 30 [4, 11], # CY | GY  |    7 | )
+  combo.make 30 [5, 12], # EO | OE  |    8 | ]
+  combo.make 30 [6, 13], # UI | IU  |    9 | }
   # nav
-  combo.make 25 [9, 10], # ESC
-  combo.make 25 [2, 3], # TAB
+  combo.make 15 [9, 10], # ESC
+  combo.make 15 [2, 3], # TAB
   # caps
-  combo.make 20 [8, 9], # OSS
-  combo.make 20 [12, 13], # OSS
-  combo.make 25 [10, 11], # caps word
-  combo.make 25 [1, 6], # caps lock
+  combo.make 12 [8, 9], # OSS
+  combo.make 12 [12, 13], # OSS
+  combo.make 15 [10, 11], # caps word
+  combo.make 15 [1, 6], # caps lock
 ] in
 let combos_L1 = [
   kc.BSPC, kc.DEL,
@@ -124,7 +124,7 @@ let combos_L2 = [
   tt & ht, tt & ht,
   tt & ht, tt & ht, tt & ht, tt & ht,
   tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
-  cu.RV, cu.NB, cu.MT, cu.GZ, cu.OE, cu.IU,
+  cu.RM, cu.NB, cu.THE, cu.GZ, cu.OE, cu.IU,
   tt & ht, tt & ht,
   tt & ht, tt & ht, tt & ht, tt & ht,
 ] in
@@ -268,7 +268,7 @@ in
 
 let layouts = {
   SRHT_L1 = "SLNDGOUARHTCEI",
-  SRHT_L2 = "FXBMWJ,YVPKZQ.",
+  SRHT_L2 = "FXBVWJ,YMPKZQ.",
 } in
 
 ### Keymap itself! ###

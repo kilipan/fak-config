@@ -97,6 +97,23 @@ let combos_base = [
   fak.CWTG, kc.CAPS_LOCK,
 ] in
 
+#  w m b    v , .
+# r s t h  n a i o
+#      k    j
+#   c g d  l u y
+#    f p    x z
+#     q
+# 
+#          e
+# 
+#    w b    x z
+#   l m d  g o u
+#      k    j
+# n r t h  c e i a
+#  v p y    f , .
+# 
+#       s
+
 
 let virtual_key_count = std.array.length virtual_keys' in
 let key_count = 18 + virtual_key_count in

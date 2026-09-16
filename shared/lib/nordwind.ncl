@@ -13,7 +13,7 @@ let rec make_base' = fun paddings => {
     let combo_indices = [
       # alpha
       [0, 1], # Q
-      [1, 2], # V
+      [1, 2], # Z
       [18, 19], # X
       [9, 25],  # SZ
       [17, 26], # AE
@@ -24,8 +24,10 @@ let rec make_base' = fun paddings => {
       # sym
       [22, 23], # SLSH
       [21, 22], # MINS
+      [21, 27], # UNDERSCORE
       [22, 27], # SCLN
       [23, 27], # COLON
+      [14, 22], # PLUS
       # parentheticals
       [0, 9],  # {
       [1, 10], # [
@@ -52,9 +54,9 @@ let rec make_base' = fun paddings => {
       [9, 18], # left os-alt
       [10, 19], # left os-gui
       [11, 20], # left os-ctl
-      [14, 23], # right os-ctl
-      [15, 24], # right os-gui
-      [16, 25], # right os-alt
+      [14, 21], # right os-ctl
+      [15, 22], # right os-gui
+      [16, 23], # right os-alt
     ] in
     kilipan.make_virtual_keys paddings combo_term combo_indices,
 
@@ -198,7 +200,7 @@ let rec make_base' = fun paddings => {
       key_interrupts = std.array.replicate key_count ki.hr,
     } in
     [
-      kc.TAB  & lt 1 & keycode.hold.reg.behavior thumb_behavior,
+      de.SZ   & lt 1 & keycode.hold.reg.behavior thumb_behavior,
       kc.S    & lt 2 & keycode.hold.reg.behavior thumb_behavior,
       kc.SPC  & lt 3 & keycode.hold.reg.behavior thumb_behavior,
       de.QUOT & lt 4 & keycode.hold.reg.behavior thumb_behavior,
@@ -208,10 +210,10 @@ let rec make_base' = fun paddings => {
     |> std.array.at thumb_idx,
 
   combos_base = [
-    kc.Q, kc.V, kc.X,
+    kc.Q, kc.Y, kc.X,
     de.SZ, de.AE, de.OE, de.UE,
     cu.SCH,
-    de.SLSH, de.MINS, de.SCLN, de.COLN,
+    de.SLSH, de.MINS, de.UNDS, de.SCLN, de.COLN, de.PLUS,
     de.LCBR, de.LBRC, de.LPRN, de.LABK,
     de.RABK, de.RPRN, de.RBRC, de.RCBR,
     kc.TAB, kc.ESC, kc.ENT, kc.ENT, kc.BSPC, kc.DEL, md.lctl & kc.BSPC,
@@ -222,7 +224,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
@@ -233,7 +235,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht,
-    tt & ht, tt & ht, tt & ht, tt & ht,
+    tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
@@ -244,7 +246,7 @@ let rec make_base' = fun paddings => {
     tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht,
-    de.SZ,   tt & ht, tt & ht, tt & ht,
+    de.SZ,   tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht,
     tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,
@@ -254,22 +256,18 @@ let rec make_base' = fun paddings => {
 
   # alpha layout to generate base keymap from
   layouts = {
-    # APTMAK = "WFPBJLUYRSTHKXNAIOCGDM,.",
-    # APTMAK_DE = "WFPBJLUZRSTHKXNAIOCGDM,.",
-    # NAUGHT = "FLKJPGOUNSHTMYCAIEBXDW',",
-    # NAUGHT_DE =    "FLKYPGOUNSHTMZCAIEBJDW',",
-    NORDEN = "LDYKPWOUNRTHFZCEIAJMBG,.",
+    NORDWIND = "LMBKPWOUNRTHFZCEIAJVDG,.",
   },
 
-  #   l d z k  p w o u
+  #   l m b k  p w o u
   # n r t h f  y c e i a
-  #   j m b      g , .
+  #   j v d      g , .
   #       # s  _ !
 
   ### Keymap itself! ###
   keymap = {
     alph = {
-        fingers = let alpha = fun key_idx => (alphas layouts.NORDEN) |> std.array.at key_idx in [
+        fingers = let alpha = fun key_idx => (alphas layouts.NORDWIND) |> std.array.at key_idx in [
                   alpha 0,  alpha 1,  alpha 2,  alpha 3,  alpha 4,  alpha 5,  alpha 6,  alpha 7,
         alpha 8,  alpha 9,  alpha 10, alpha 11, alpha 12, alpha 13, alpha 14, alpha 15, alpha 16, alpha 17,
                   alpha 18, alpha 19, alpha 20,                     alpha 21, alpha 22, alpha 23,
@@ -279,11 +277,11 @@ let rec make_base' = fun paddings => {
     },
     numb = {
       fingers = [
-                kc.N9,   kc.N8,   kc.N7,    de.PLUS,     de.PLUS,  kc.N4,   kc.N5,   kc.N6,
-      kc.DOT,   kc.N6,   kc.N5,   kc.N4,    kc.N0,       de.MINS,  kc.N1,   kc.N2,   kc.N3,   kc.DOT,
-                kc.N3,   kc.N2,   kc.N1,                           kc.N7,   kc.N8,   kc.N9,
+                ks.EXLM, de.AT,   de.HASH,  ks.DLR,      de.AMPR,  de.ASTR, ks.PERC, de.CIRC,
+      kc.N7,    kc.N6,   kc.N5,   kc.N4,    kc.N9,       kc.N8,    kc.N1,   kc.N2,   kc.N3,   kc.DOT,
+                de.GRV,  de.DQUO, de.ACUT,                         de.BSLS, de.PIPE, de.EQL,
       ] |> (fun x => kilipan.pad_fingers x (hx & tx) paddings),
-      thumbs = [                  tt & ht, tt & ht,      tt & ht,  kc.N0,
+      thumbs = [                  tt & ht, tt & ht,      de.TILD,  kc.N0,
       ] |> (fun x => kilipan.pad_thumbs x (hx & tx) paddings),
     },
     navi = {
